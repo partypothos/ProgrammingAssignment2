@@ -1,15 +1,36 @@
-## Put comments here that give an overall description of what your
-## functions do
+#Erin Langness
+#Coursera, 2022
 
-## Write a short comment describing this function
-
+## This function, when run, will plug in a matrix, produce an inverse, and store it in the cache,
+## to be pulled by the following function "cacheSolve"
 makeCacheMatrix <- function(x = matrix()) {
-
+	e <- NULL
+	set <- function(y) {
+		y <<- x
+		e <<- NULL
+}
+pull <- function()x
+setinverse <- inv(function(x))
+pullinverse <- function()e
+list(set = set, pull = pull,
+	setinverse=setinverse,
+	pullinverse=pullinverse)
+	
 }
 
-
-## Write a short comment describing this function
+## The following function pulls the cached matrix inverse that was created in "makeCacheMatrix"
+## It does so by taking matrix x, refrenced earlier, and retreiving the pullinverse values for that matrix.
+## It then returns the values for that inverse, as defined in the previous function.
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+
+e <- x$pullinverse()
+if(!is.null(e)) {
+	print("retrieving cache")
+	return(e)
+}
+info <- x$get()
+e <- solve(info, ...)
+x$setinverse(e)
+e
 }
